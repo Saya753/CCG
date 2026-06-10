@@ -18,61 +18,126 @@ struct cli
         lib.name = "CCG";
         lib.operationhour = "8:00AM-8:00PM";
         lib.load();
+        
+        int entry;
 
         cout << "\e[0;34m##Welcome to CCG##\e[0;37m" << endl;
-        cout << "\e[0;32m(1) Log IN        \e[0;35m(2) Sign Up\e[0;37m" << endl;
-        int choice = 0;
-        while (choice != 1 && choice != 2) {
-            cin >> choice;
+        cout << "\e[0;34m1:Manager" << endl << "2:User\e[0;37m";
+
+        // entering system for manager
+        if (entry == 1) {
+            cout << "\e[0;32m(1) Log IN        \e[0;35m(2) Sign Up\e[0;37m" << endl;
+            int choice = 0;
+            while (choice != 1 && choice != 2) {
+                cin >> choice;
+            }
+
+            if (choice == 1) {
+                string managername, password;
+                while (true)
+                {          
+                    cout << "\e[0;32m -Managername: ";
+                    cout << "\e[0;33m"; 
+                    cin >> managername;
+                    cout << "\e[0;32m -password: ";
+                    cout << "\e[0;33m";
+                    cin >> password;
+                    cout << "\e[0;37m";
+                    if (lib.logIn(managername, password)) {
+                        cout << "\e[0;34mLog in Successful!" << endl;
+                        managerName = managername;
+                        Password = password;
+                        break;
+                    }
+                    else {
+                        cout << "\e[0;31mWrong Cridintial! Try Again!\e[0;37m" << endl;
+                    }
+                }
+            } 
+            else if (choice == 2) {
+                string username, id, name;
+                while (true)
+                {          
+                    cout << "\e[0;32m -Name: ";
+                    cout << "\e[0;33m"; 
+                    cin >> name;
+                    cout << "\e[0;32m -Username: ";
+                    cout << "\e[0;33m";
+                    cin >> username;
+                    cout << "\e[0;32m -Id: ";
+                    cout << "\e[0;33m";
+                    cin >> id;
+                    cout << "\e[0;37m";
+                    if (lib.signUp(name, username, id)) {
+                        cout << "\e[0;34mSign Up Successful!" << endl;
+                        userName = username;
+                        userID = id;
+                        break;
+                    }
+                    else {
+                        cout << "\e[0;31mWrong Cridintial! Try Again!\e[0;37m" << endl;
+                    }
+                }
+            }       
         }
 
-        if (choice == 1) {
-            string username, id;
-            while (true)
-            {          
-                cout << "\e[0;32m -Username: ";
-                cout << "\e[0;33m"; 
-                cin >> username;
-                cout << "\e[0;32m -Id: ";
-                cout << "\e[0;33m";
-                cin >> id;
-                cout << "\e[0;37m";
-                if (lib.logIn(username, id)) {
-                    cout << "\e[0;34mLog in Successful!" << endl;
-                    userName = username;
-                    userID = id;
-                    break;
-                }
-                else {
-                    cout << "\e[0;31mWrong Cridintial! Try Again!\e[0;37m" << endl;
-                }
+        // entering system for user
+        if (entry == 2) {
+
+            cout << "\e[0;32m(1) Log IN        \e[0;35m(2) Sign Up\e[0;37m" << endl;
+            int choice = 0;
+            while (choice != 1 && choice != 2) {
+                cin >> choice;
             }
-        } 
-        else if (choice == 2) {
-            string username, id, name;
-            while (true)
-            {          
-                cout << "\e[0;32m -Name: ";
-                cout << "\e[0;33m"; 
-                cin >> name;
-                cout << "\e[0;32m -Username: ";
-                cout << "\e[0;33m";
-                cin >> username;
-                cout << "\e[0;32m -Id: ";
-                cout << "\e[0;33m";
-                cin >> id;
-                cout << "\e[0;37m";
-                if (lib.signUp(name, username, id)) {
-                    cout << "\e[0;34mSign Up Successful!" << endl;
-                    userName = username;
-                    userID = id;
-                    break;
+
+            if (choice == 1) {
+                string username, id;
+                while (true)
+                {          
+                    cout << "\e[0;32m -Username: ";
+                    cout << "\e[0;33m"; 
+                    cin >> username;
+                    cout << "\e[0;32m -Id: ";
+                    cout << "\e[0;33m";
+                    cin >> id;
+                    cout << "\e[0;37m";
+                    if (lib.logIn(username, id)) {
+                        cout << "\e[0;34mLog in Successful!" << endl;
+                        userName = username;
+                        userID = id;
+                        break;
+                    }
+                    else {
+                        cout << "\e[0;31mWrong Cridintial! Try Again!\e[0;37m" << endl;
+                    }
                 }
-                else {
-                    cout << "\e[0;31mWrong Cridintial! Try Again!\e[0;37m" << endl;
+            } 
+            else if (choice == 2) {
+                string username, id, name;
+                while (true)
+                {          
+                    cout << "\e[0;32m -Name: ";
+                    cout << "\e[0;33m"; 
+                    cin >> name;
+                    cout << "\e[0;32m -Username: ";
+                    cout << "\e[0;33m";
+                    cin >> username;
+                    cout << "\e[0;32m -Id: ";
+                    cout << "\e[0;33m";
+                    cin >> id;
+                    cout << "\e[0;37m";
+                    if (lib.signUp(name, username, id)) {
+                        cout << "\e[0;34mSign Up Successful!" << endl;
+                        userName = username;
+                        userID = id;
+                        break;
+                    }
+                    else {
+                        cout << "\e[0;31mWrong Cridintial! Try Again!\e[0;37m" << endl;
+                    }
                 }
-            }
-        }       
+            }       
+        }
     }
 
     void help()
@@ -129,6 +194,7 @@ struct cli
                 cout << "\e[0;33m-Title:\e[0;37m";
                 getline(cin, title);
                 lib.deleteBook(title);
+                cout << "\e[0;32m##Book deleted successfuly##\e[0;37m";
             }
             else if (prompt == "borrow book"){
                 string title;
@@ -141,6 +207,14 @@ struct cli
                     cout << "\e[0;31m##Book is unAvailble or Does not exist!##\e[0;37m" << endl;
                 }
             }
+            else if (prompt == "return books") {
+                string title;
+                cout << "\e[0;33m-Title: \e[0;37m";
+                getline(cin, title);
+                if (lib.returnBook(title, userID)) {
+                    cout << "\e[0;32m##Book is returned!##\e[0;37m" << endl;
+                }
+            }
             else if (prompt == "edit user") {
                 string new_name, new_username, id;
                 cout << "\e[0;33m-New-name: ";
@@ -150,6 +224,7 @@ struct cli
                 cout << "-Id:\e[0;37m ";
                 getline(cin, id);
                 lib.editUser(new_name,new_username,id);
+                cout << "\e[0;32m##User edited successfuly##\e[0;37m";
             }
             else {
                 cout << "\e[0;31mInvalid Input!\e[0;37m" << endl;

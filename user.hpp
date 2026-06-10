@@ -12,5 +12,4 @@ struct User{
 
 };
 
-
 #endif // USER_HPP
